@@ -16,7 +16,6 @@ jobs:
     runs-on: windows-latest
 
     steps:
-
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -34,6 +33,7 @@ jobs:
             "version": "0.0.1",
             "description": "MathWrech Desktop Application",
             "main": "index.js",
+            "author": "MathWrech",
             "scripts": {
               "build": "electron-builder"
             },
@@ -49,23 +49,10 @@ jobs:
                 "index.html",
                 "icon.ico"
               ],
+              "publish": null,
               "win": {
                 "target": "portable",
                 "icon": "icon.ico"
-              },
-              "linux": {
-                "target": [
-                  "AppImage",
-                  "deb"
-                ],
-                "category": "Utility"
-              },
-              "mac": {
-                "target": [
-                  "dmg",
-                  "zip"
-                ],
-                "category": "public.app-category.utilities"
               }
             }
           }
@@ -75,7 +62,7 @@ jobs:
         run: npm install
 
       - name: Build Windows
-        run: npm run build -- --win
+        run: npm run build
 
       - name: Upload Windows
         uses: actions/upload-artifact@v4
@@ -92,7 +79,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -109,6 +95,7 @@ jobs:
             "version": "0.0.1",
             "description": "MathWrech Desktop Application",
             "main": "index.js",
+            "author": "MathWrech",
             "scripts": {
               "build": "electron-builder"
             },
@@ -121,9 +108,9 @@ jobs:
               "productName": "MathWrech",
               "files": [
                 "index.js",
-                "index.html",
-                "icon.ico"
+                "index.html"
               ],
+              "publish": null,
               "linux": {
                 "target": [
                   "AppImage",
@@ -156,7 +143,6 @@ jobs:
     runs-on: macos-latest
 
     steps:
-
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -173,6 +159,7 @@ jobs:
             "version": "0.0.1",
             "description": "MathWrech Desktop Application",
             "main": "index.js",
+            "author": "MathWrech",
             "scripts": {
               "build": "electron-builder"
             },
@@ -185,9 +172,9 @@ jobs:
               "productName": "MathWrech",
               "files": [
                 "index.js",
-                "index.html",
-                "icon.ico"
+                "index.html"
               ],
+              "publish": null,
               "mac": {
                 "target": [
                   "dmg",
@@ -247,9 +234,24 @@ jobs:
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: v0.0.1
           name: MathWrech v0.0.1
+          body: |
+            # MathWrech v0.0.1
+
+            Initial release of MathWrech.
+
+            ## Downloads
+
+            - Windows 7+
+            - Linux
+            - macOS
+
+          draft: false
+          prerelease: false
           generate_release_notes: true
           files: |
             release/windows/*
