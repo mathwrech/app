@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>آچار ریاضی</title>
+  <link rel="icon" href="icon.ico">
+
+  <style>
+
+    :root {
+      --bg: #050a08;
+      --bg-soft: #0a1410;
+
+      --surface: rgba(255, 255, 255, 0.065);
+      --surface-strong: rgba(255, 255, 255, 0.10);
+
+      --border: rgba(255, 255, 255, 0.16);
+      --border-soft: rgba(255, 255, 255, 0.09);
+
+      --text: #f4fff8;
+      --muted: #9db2a7;
+
+      --accent: #39e58b;
+      --accent-strong: #16c96e;
+      --accent-soft: rgba(57, 229, 139, 0.13);
+
+      --shadow: rgba(255, 255, 255, 0.10);
+      --shadow-deep: rgba(0, 0, 0, 0.28);
+
+      --max: 1100px;
+    }
+
+    @font-face {
+      font-family: "Vazirmatn";
+      src: url("vazirmatn.ttf");
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: "Vazirmatn", sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+
+      background:
+        radial-gradient(
+          circle at 15% 10%,
+          var(--accent-soft),
+          transparent 28%
+        ),
+        radial-gradient(
+          circle at 85% 20%,
+          rgba(48, 137, 255, 0.08),
+          transparent 30%
+        ),
+        linear-gradient(
+          145deg,
+          var(--bg),
+          var(--bg-soft)
+        );
+
+      overflow-x: hidden;
+    }
+
+    /* ---------- Background ---------- */
+
+    .background {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .grid {
+      position: absolute;
+      inset: 0;
+
+      opacity: 0.55;
+
+      background-image:
+        linear-gradient(
+          var(--border-soft) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          var(--border-soft) 1px,
+          transparent 1px
+        );
+
+      background-size: 64px 64px;
+
+      mask-image:
+        radial-gradient(
+          circle at center,
+          black,
+          transparent 72%
+        );
+
+      -webkit-mask-image:
+        radial-gradient(
+          circle at center,
+          black,
+          transparent 72%
+        );
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.16;
+    }
+
+    .orb-1 {
+      width: 360px;
+      height: 360px;
+      top: -150px;
+      left: -100px;
+      background: var(--accent);
+    }
+
+    .orb-2 {
+      width: 330px;
+      height: 330px;
+      right: -120px;
+      top: 30%;
+      background: #238cff;
+    }
+
+    .orb-3 {
+      width: 280px;
+      height: 280px;
+      bottom: -150px;
+      left: 40%;
+      background: var(--accent);
+    }
+
+    /* ---------- Header ---------- */
+
+    header {
+      width: min(var(--max), calc(100% - 30px));
+      margin: 20px auto 0;
+    }
+
+    .navbar {
+      min-height: 66px;
+      padding: 10px 18px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      border-radius: 21px;
+
+      background: var(--surface);
+      border: 1px solid var(--border);
+
+      box-shadow:
+        0 22px 60px var(--shadow),
+        0 8px 28px var(--shadow-deep),
+        inset 0 1px 0 rgba(255, 255, 255, 0.14);
+
+      backdrop-filter: blur(22px) saturate(140%);
+      -webkit-backdrop-filter: blur(22px) saturate(140%);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      font-weight: 900;
+      font-size: 1.05rem;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 13px;
+
+      color: var(--accent);
+      background: var(--accent-soft);
+      border: 1px solid var(--border);
+
+      font-size: 1.35rem;
+    }
+
+    .web-badge {
+      padding: 7px 12px;
+
+      border-radius: 999px;
+
+      color: var(--accent);
+      background: var(--accent-soft);
+      border: 1px solid var(--border);
+
+      font-size: 0.72rem;
+    }
+
+    /* ---------- Main ---------- */
+
+    main {
+      width: min(var(--max), calc(100% - 30px));
+      min-height: calc(100vh - 120px);
+
+      margin: auto;
+
+      display: grid;
+      place-items: center;
+    }
+
+    .main-card {
+      width: min(760px, 100%);
+
+      padding: 60px 30px;
+
+      text-align: center;
+
+      border-radius: 32px;
+
+      background: var(--surface);
+      border: 1px solid var(--border);
+
+      box-shadow:
+        0 25px 70px var(--shadow),
+        0 10px 30px var(--shadow-deep),
+        inset 0 1px 0 rgba(255, 255, 255, 0.14);
+
+      backdrop-filter: blur(24px) saturate(140%);
+      -webkit-backdrop-filter: blur(24px) saturate(140%);
+    }
+
+    /* ---------- Wrench Logo ---------- */
+
+    .logo {
+      position: relative;
+
+      width: 190px;
+      height: 175px;
+
+      margin: 0 auto 15px;
+
+      display: grid;
+      place-items: center;
+    }
+
+    .logo-glow {
+      position: absolute;
+
+      width: 145px;
+      height: 145px;
+
+      border-radius: 50%;
+
+      background: var(--accent);
+
+      opacity: 0.12;
+      filter: blur(30px);
+    }
+
+    .wrench {
+      position: relative;
+
+      width: 92px;
+      height: 145px;
+
+      transform: rotate(42deg);
+
+      filter:
+        drop-shadow(
+          0 14px 18px var(--shadow-deep)
+        );
+    }
+
+    .wrench-head {
+      position: absolute;
+
+      width: 67px;
+      height: 67px;
+
+      top: 0;
+      left: 13px;
+
+      border: 12px solid var(--accent);
+      border-radius: 50%;
+    }
+
+    .wrench-head::after {
+      content: "";
+
+      position: absolute;
+
+      width: 28px;
+      height: 30px;
+
+      top: -15px;
+      right: -14px;
+
+      background: var(--bg-soft);
+
+      border-radius:
+        0 0 14px 14px;
+    }
+
+    .wrench-neck {
+      position: absolute;
+
+      width: 30px;
+      height: 42px;
+
+      top: 49px;
+      left: 31px;
+
+      background: var(--accent);
+
+      border-radius: 6px;
+    }
+
+    .wrench-handle {
+      position: absolute;
+
+      width: 32px;
+      height: 76px;
+
+      left: 30px;
+      top: 78px;
+
+      border-radius:
+        7px 7px 14px 14px;
+
+      background:
+        linear-gradient(
+          90deg,
+          var(--accent-strong),
+          var(--accent)
+        );
+    }
+
+    .wrench-handle::after {
+      content: "";
+
+      position: absolute;
+
+      width: 11px;
+      height: 11px;
+
+      left: 10px;
+      bottom: 11px;
+
+      border:
+        3px solid rgba(0, 0, 0, 0.25);
+
+      border-radius: 50%;
+    }
+
+    .wrench-bolt {
+      position: absolute;
+
+      left: 32px;
+      top: 75px;
+
+      z-index: 3;
+
+      color: var(--bg);
+
+      font-size: 1rem;
+      font-weight: 900;
+
+      transform: rotate(-42deg);
+    }
+
+    /* ---------- Title ---------- */
+
+    h1 {
+      margin: 5px 0 15px;
+
+      font-size:
+        clamp(2.8rem, 8vw, 5rem);
+
+      line-height: 1;
+
+      letter-spacing: -2px;
+    }
+
+    h1 span {
+      color: var(--accent);
+
+      text-shadow:
+        0 0 35px var(--accent-soft);
+    }
+
+    .subtitle {
+      margin: 0 auto;
+
+      max-width: 570px;
+
+      color: var(--muted);
+
+      font-size: 1rem;
+
+      line-height: 2;
+    }
+
+    /* ---------- Simple Button ---------- */
+
+    .button {
+      margin-top: 30px;
+
+      min-height: 50px;
+
+      padding: 12px 24px;
+
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+
+      border-radius: 15px;
+
+      color: #041009;
+
+      background: var(--accent);
+
+      border: 1px solid transparent;
+
+      font-weight: 900;
+      font-size: 0.9rem;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 12px 32px var(--accent-soft);
+
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-3px);
+
+      box-shadow:
+        0 16px 40px var(--accent-soft);
+    }
+
+    .button:active {
+      transform: translateY(0);
+    }
+
+    /* ---------- Footer ---------- */
+
+    footer {
+      padding: 0 20px 25px;
+
+      text-align: center;
+
+      color: var(--muted);
+
+      font-size: 0.72rem;
+    }
+
+    /* ---------- Responsive ---------- */
+
+    @media (max-width: 600px) {
+
+      header {
+        width: min(
+          100% - 20px,
+          var(--max)
+        );
+
+        margin-top: 10px;
+      }
+
+      .navbar {
+        min-height: 58px;
+        padding: 8px 12px;
+      }
+
+      .brand {
+        font-size: 0.95rem;
+      }
+
+      .brand-mark {
+        width: 38px;
+        height: 38px;
+      }
+
+      .web-badge {
+        font-size: 0.65rem;
+        padding: 6px 9px;
+      }
+
+      main {
+        width: min(
+          100% - 20px,
+          var(--max)
+        );
+      }
+
+      .main-card {
+        padding: 45px 20px;
+        border-radius: 26px;
+      }
+
+      .logo {
+        transform: scale(0.9);
+      }
+
+      h1 {
+        font-size:
+          clamp(2.5rem, 15vw, 4rem);
+      }
+
+      .subtitle {
+        font-size: 0.9rem;
+        line-height: 1.9;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      * {
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Background -->
+  <div class="background">
+    <div class="grid"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+
+  <!-- Header -->
+  <header>
+
+    <nav class="navbar">
+
+      <div class="brand">
+
+        <div class="brand-mark">
+          ⚒
+        </div>
+
+        <span>
+          آچار ریاضی
+        </span>
+
+      </div>
+
+      <div class="web-badge">
+        نسخه تحت وب
+      </div>
+
+    </nav>
+
+  </header>
+
+
+  <!-- Main -->
+  <main>
+
+    <section class="main-card">
+
+      <!-- Logo -->
+      <div class="logo">
+
+        <div class="logo-glow"></div>
+
+        <div class="wrench">
+
+          <div class="wrench-head"></div>
+
+          <div class="wrench-neck"></div>
+
+          <div class="wrench-handle"></div>
+
+          <div class="wrench-bolt">
+            ×
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- Title -->
+      <h1>
+        <span>آچار</span> ریاضی
+      </h1>
+
+
+      <!-- Description -->
+      <p class="subtitle">
+        ابزارهای ساده و کاربردی برای یادگیری،
+        کاوش و حل مسائل ریاضی
+      </p>
+
+
+      <!-- Temporary button -->
+      <button
+        class="button"
+        onclick="showMessage()"
+      >
+        ورود به آچار ریاضی
+        <span>←</span>
+      </button>
+
+    </section>
+
+  </main>
+
+
+  <!-- Footer -->
+  <footer>
+    آچار ریاضی — نسخه تحت وب
+  </footer>
+
+
+  <script>
+    function showMessage() {
+      alert("نسخه تحت وب آچار ریاضی به‌زودی آماده می‌شود.");
+    }
+  </script>
+
+</body>
+</html>
